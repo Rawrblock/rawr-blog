@@ -5,7 +5,7 @@
       <div class="icon" @click="editBlog">
         <ion-icon name="pencil-sharp"></ion-icon>
       </div>
-      <div class="icon" @click="deleteBlog">
+      <div class="icon" @click="deleteBlog(blogItem.id)">
         <ion-icon name="trash-sharp"></ion-icon>
       </div>
     </div>
@@ -28,7 +28,10 @@ export default {
     editBlog() {
       this.$router.push({ name: 'UpdateBlog', params: { blogid: this.blogItem.id } });
     },
-    deleteBlog() {}
+    async deleteBlog(id) {
+      await this.$store.dispatch('deleteBlogs', id);
+      await this.$store.dispatch('getBlogsList');
+    }
   },
   computed: {
     time() {

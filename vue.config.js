@@ -23,6 +23,9 @@
 
 // const webpack = require('webpack');
 module.exports = {
+  devServer: {
+    port: 8081
+  },
   publicPath: '/',
   lintOnSave: false,
   chainWebpack: config => {

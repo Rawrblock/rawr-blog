@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import NProgress from 'nprogress';
 
 Vue.use(VueRouter);
 
@@ -78,9 +79,14 @@ const router = new VueRouter({
   }
 });
 router.beforeEach((to, from, next) => {
+  NProgress.start();
   document.title = `${to.meta.title} | Rawr`;
   window.scrollBy(0, 0);
   next();
+});
+
+router.afterEach(() => {
+  NProgress.done();
 });
 
 export default router;

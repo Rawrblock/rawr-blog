@@ -3,7 +3,11 @@ import App from './App.vue';
 import router from './router';
 import store from './store/index';
 import '../src/assets/style/global.scss';
+import 'nprogress/nprogress.css';
+import 'default-passive-events';
+import Notify from '@/components/Notify';
 
+Vue.prototype.$notify = Notify;
 Vue.config.productionTip = false;
 
 new Vue({

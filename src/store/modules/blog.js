@@ -1,7 +1,11 @@
-import { createBlog, getList, getBlogInfo, updateBlog } from '../../api/blog';
+import { createBlog, getList, getBlogInfo, updateBlog, deleteBlog } from '../../api/blog';
 const state = () => ({
   // 全部的blogs
-  blogList: null
+  blogList: null,
+  blogPageNumber: {
+    currentPage: 0,
+    size: 5
+  }
 });
 
 const mutations = {
@@ -17,8 +21,8 @@ const actions = {
     console.log(result);
   },
   // 获取全部blogs
-  async getBlogsList({ commit }, blogPageNumber) {
-    const result = await getList(blogPageNumber);
+  async getBlogsList({ commit, state }) {
+    const result = await getList(state.blogPageNumber);
     commit('SET_BLOGS_LIST', result.data);
   },
   // 获取当前博客数据
@@ -30,6 +34,9 @@ const actions = {
   async updateBlogs({ commit }, data) {
     const result = await updateBlog(data.id, data.updateBlogRequest);
     console.log(result);
+  },
+  async deleteBlogs({ commit }, id) {
+    await deleteBlog(id);
   }
 };
 

@@ -15,3 +15,7 @@ export const getList = pageNumber => {
 export const getBlogInfo = id => {
   return get(`/blogs/${id}`);
 };
+
+export const deleteBlog = id => {
+  return post(`/blogs/delete/${id}`);
+};

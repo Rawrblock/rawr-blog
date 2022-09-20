@@ -29,15 +29,11 @@ export default {
   components: { BlogCard, BlogHeader },
   data() {
     return {
-      isEditor: null,
-      pageNumber: {
-        currentPage: 0,
-        size: 5
-      }
+      isEditor: null
     };
   },
   mounted() {
-    this.$store.dispatch('getBlogsList', this.pageNumber);
+    this.$store.dispatch('getBlogsList');
   }
 };
 </script>

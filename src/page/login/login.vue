@@ -45,8 +45,18 @@ export default {
         email: this.email,
         password: this.password
       };
-      await this.$store.dispatch('toLogin', loginUser);
-      await this.$store.dispatch('getCurrentUser');
+      try {
+        await this.$store.dispatch('toLogin', loginUser);
+        await this.$store.dispatch('getCurrentUser');
+        this.$notify.success({
+          message: '登录成功!',
+          onClose: () => {
+            this.$router.push({ name: 'Home' });
+          }
+        });
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 };
