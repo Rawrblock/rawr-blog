@@ -4,25 +4,28 @@
     <div class="blog-content">
       <div>
         <!-- 标题 -->
-        <h2>THIS IS A TESTING POST! #7</h2>
+        <h2>{{ item.title }}</h2>
         <!-- 简介 -->
-        <p class="content-preview">THIS IS A TESTING POST! #7</p>
+        <p class="content-preview">{{ item.title }}</p>
         <!-- 跳转 -->
-        <router-link to="#" class="link">
-          View The Post
-          <ion-icon name="arrow-forward-sharp"></ion-icon
-        ></router-link>
+        <router-link :to="{ name: 'ViewBlog', params: { blogid: item.id } }" class="link">
+          <span>View The Post</span>
+          <font-awesome-icon icon="fa-solid fa-arrow-right" />
+        </router-link>
       </div>
     </div>
     <!-- 封面 -->
     <div class="blog-photo">
-      <img src="../../assets/images/ryan.jpg" alt="" />
+      <img :src="item.cover.uri" alt="" />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'RecommendedBlog',
+  props: ['item']
+};
 </script>
 
 <style lang="scss" scoped>
@@ -92,6 +95,9 @@ export default {};
         padding-bottom: 4px;
         border-bottom: 1px solid transparent;
         transition: 0.5s ease-in all;
+        span {
+          margin-right: 5px;
+        }
 
         &:hover {
           border-bottom-color: #303030;

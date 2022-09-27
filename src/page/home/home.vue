@@ -1,20 +1,24 @@
 <template>
   <div class="home" id="home">
-    <header class="full_page">
+    <header class="full_page" :style="{ backgroundImage: `url(${$store.getters.homeCoverUri})` }">
       <!-- h1标题 -->
       <div class="site-info">
         <h1>Welcome! to Rawr's Blog</h1>
         <p class="info-p" ref="info-p">
           {{ Text }}
         </p>
-        <arrowDownIcon class="icon" />
+        <font-awesome-icon icon="fa-solid fa-chevron-down fa-lg" class="icon" />
+        <!-- <arrowDownIcon class="icon" /> -->
       </div>
     </header>
     <!-- 内容 -->
     <main class="layout">
       <div class="layout-blog">
-        <RecommendedBlog />
-        <RecommendedBlog />
+        <RecommendedBlog
+          v-for="(blog, index) in $store.state.blog.blogList.slice(0, 2)"
+          :key="index"
+          :item="blog"
+        />
       </div>
       <!-- github信息 -->
       <div class="layout-content">
@@ -23,7 +27,11 @@
           <!-- Author标题 -->
           <div class="author">Author</div>
           <div class="user-info">
-            <img class="cover" src="../../assets/images/ellipse.png" alt="" />
+            <img
+              class="cover"
+              src="http://rawrblock.oss-cn-hangzhou.aliyuncs.com/blog/ellipse.png"
+              alt=""
+            />
             <h3>Rawrblock</h3>
             <span>Rawr-Blog</span>
             <ul>
@@ -33,7 +41,7 @@
               </li>
             </ul>
             <a href="https://github.com/Rawrblock">
-              <ion-icon name="logo-github"></ion-icon>
+              <font-awesome-icon icon="fa-brands fa-github" />
               Find Me
             </a>
           </div>
@@ -55,19 +63,19 @@
               </div>
               <div class="bottom">
                 <button>
-                  <ion-icon class="icon" name="play"></ion-icon>
+                  <font-awesome-icon icon="fa-solid fa-play" />
                 </button>
                 <button>
-                  <ion-icon class="icon" name="play-skip-forward"></ion-icon>
+                  <font-awesome-icon icon="fa-solid fa-forward" />
                 </button>
               </div>
             </div>
           </div>
           <div class="col col-2">
             <h2>never miss a post. Register for your free acount today!</h2>
-            <router-link class="router-button" to="#">
+            <router-link class="router-button" :to="{ name: 'Register' }">
               Register for VillagersBlogs
-              <ion-icon class="icon" name="arrow-forward-outline"></ion-icon>
+              <font-awesome-icon icon="fa-solid fa-arrow-right" />
             </router-link>
           </div>
         </div>
@@ -77,12 +85,10 @@
 </template>
 
 <script>
-import arrowDownIcon from '../../assets/icons/arrow_down_ios.svg';
 import RecommendedBlog from '@/page/home/RecommendedBlog.vue';
 export default {
   name: 'Home',
   components: {
-    arrowDownIcon,
     RecommendedBlog
   },
   data() {
@@ -105,10 +111,14 @@ export default {
       }
 
       this.timer = setTimeout(this.writeText, 800);
+    },
+    async getBlogs() {
+      await this.$store.dispatch('getBlogsList');
     }
   },
   mounted() {
     // this.writeText();'
+    this.getBlogs();
   }
 };
 </script>
@@ -119,7 +129,6 @@ export default {
   // 背景
   .full_page {
     min-height: 100vh;
-    background-image: url('../../assets/images/cover.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -172,6 +181,8 @@ export default {
       }
       // 箭头
       .icon {
+        font-size: 25px;
+        color: #fff;
         position: absolute;
         bottom: 40px;
         left: 50%;
@@ -191,10 +202,10 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    // 左侧
+    // 左侧 github
     .content-user {
       flex: 1;
-      padding: 20px 30px;
+      padding: 20px 35px;
       background: $white;
       box-shadow: $blackShadow;
       border-radius: 10px;
@@ -222,8 +233,12 @@ export default {
           margin-bottom: 10px;
         }
 
+        h3 {
+          font-size: 25px;
+        }
+
         > span {
-          font-size: 14px;
+          font-size: 16px;
           margin-bottom: 20px;
         }
 
@@ -233,10 +248,10 @@ export default {
           align-items: center;
           transition: all 0.2s ease-in;
           .tag {
-            font-size: 14px;
+            font-size: 19px;
           }
           .num {
-            font-size: 18px;
+            font-size: 19px;
           }
           &:hover {
             color: #52d0cf;
@@ -244,12 +259,13 @@ export default {
         }
 
         a {
-          padding: 6px 60px;
+          padding: 7px 75px;
           color: #fff;
           border: none;
           background: #49b1f5;
           font-size: 14px;
           display: flex;
+          align-items: center;
           gap: 5px;
         }
       }
@@ -367,7 +383,30 @@ export default {
     }
     @media (min-width: 800px) {
       flex-direction: row;
-      padding: 20px 90px;
+      padding: 20px 20px;
+      .content-user {
+        padding: 15px 20px;
+        .user-info {
+          h3 {
+            font-size: 17px;
+          }
+          > span {
+            font-size: 14px;
+          }
+
+          li {
+            font-size: 14px;
+          }
+
+          a {
+            padding: 7px 70px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+    @media (min-width: 1100px) {
+      padding: 20px 70px;
     }
   }
 }

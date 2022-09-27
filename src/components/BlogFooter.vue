@@ -5,23 +5,27 @@
         <router-link class="header" :to="{ name: 'Home' }">RawrBlogs</router-link>
         <ul>
           <li>
-            <a href="/"><weChat class="svg-icon" /></a>
+            <a href="/">
+              <font-awesome-icon class="svg-icon" icon="fa-brands fa-weixin" />
+            </a>
           </li>
           <li>
-            <a href="/"><gitHub class="svg-icon" /></a>
+            <a href="/">
+              <font-awesome-icon class="svg-icon" icon="fa-brands fa-github" />
+            </a>
           </li>
         </ul>
       </div>
       <div class="col-2">
         <ul>
           <li>
-            <router-link :to="{ name: 'Home' }" class="link">HOME</router-link>
+            <router-link to="#" class="link">HOME</router-link>
           </li>
           <li>
-            <router-link to="#" class="link">BLOG</router-link>
+            <router-link :to="{ name: 'Blog' }" class="link">BLOG</router-link>
           </li>
           <li>
-            <router-link to="#" class="link">REGISTER</router-link>
+            <router-link :to="{ name: 'Register' }" class="link">REGISTER</router-link>
           </li>
         </ul>
       </div>
@@ -33,16 +37,10 @@
 </template>
 
 <script>
-import weChat from '../assets/icons/wechat-brands.svg';
-import gitHub from '../assets/icons/github-brands.svg';
 export default {
   name: 'BlogFooter',
   data() {
     return {};
-  },
-  components: {
-    weChat,
-    gitHub
   }
 };
 </script>
@@ -52,7 +50,7 @@ export default {
 
 .footer {
   margin-top: auto;
-  padding: 100px 65px;
+  padding: 45px 65px;
   background-color: $footerblack;
   font-family: 'Teko';
   display: flex;

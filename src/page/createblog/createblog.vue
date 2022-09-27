@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <BlogCoverPreview v-model="coverPreview" :file="blogCover" />
-    <header class="blog-page">
+    <header class="blog-page" :style="{ backgroundImage: `url(${$store.getters.blogCoverUri})` }">
       <div class="page-site-title">
         <h1>{{ isEditor ? 'UPDATE BLOG' : 'CREATE BLOG' }}</h1>
       </div>
@@ -64,20 +64,47 @@ export default {
       };
       if (this.isEditor) {
         // 编辑模式
-        await this.$store.dispatch('updateBlogs', {
-          id: this.blogId,
-          updateBlogRequest: blogCreateRequest
-        });
+        try {
+          await this.$store.dispatch('updateBlogs', {
+            id: this.blogId,
+            updateBlogRequest: blogCreateRequest
+          });
+          this.$notify({
+            type: 'success',
+            message: '编辑成功!',
+            onClose: () => {
+              this.$router.push({ name: 'Blog' });
+            }
+          });
+        } catch (err) {
+          console.log(err);
+        }
       } else {
         // 发布模式
-        let result = await this.$store.dispatch('releaseBlog', blogCreateRequest);
+        await this.$store.dispatch('releaseBlog', blogCreateRequest);
+        this.$notify({
+          type: 'success',
+          message: '发布成功!',
+          onClose: () => {
+            this.$router.push({ name: 'Blog' });
+          }
+        });
       }
     },
     // 博客封面图片上传
     async fileCoverChange(e) {
       let file = e.target.files[0];
-      let result = await this.$store.dispatch('initUploadFile', { file, save: 'blog' });
-      this.blogCover = result;
+      try {
+        let result = await this.$store.dispatch('initUploadFile', { file, save: 'blog' });
+        this.blogCover = result;
+        this.$notify({
+          type: 'success',
+          message: '封面上传成功',
+          duration: 1500
+        });
+      } catch (err) {
+        console.log(err);
+      }
     },
     openPreview() {
       this.coverPreview = !this.coverPreview;
@@ -109,12 +136,11 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .container {
   .blog-page {
     position: relative;
     height: 400px;
-    background-image: url('../../assets/images/blog-header.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -209,8 +235,12 @@ export default {
       }
     }
     .editor {
-      height: 60vh;
+      min-height: 60vh;
       margin-top: 20px;
+
+      .tox-tinymce {
+        min-height: 60vh !important;
+      }
     }
   }
 }

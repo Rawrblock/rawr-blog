@@ -3,11 +3,7 @@ import Cookies from 'js-cookie';
 // token持久化操作 KEY值
 const TokenKey = 'token';
 const UserKey = 'current-user';
-const defaultUser = {
-  username: null,
-  password: null,
-  role: []
-};
+const defaultUser = {};
 
 // 获取Token
 export const getToken = () => {

@@ -1,30 +1,34 @@
 import Notify from '@/components/Notify';
 
-const success = message => {
+const success = options => {
   Notify({
     type: 'success',
-    message: message
+    message: options.message,
+    onClose: options.onClose
   });
 };
 
-const error = message => {
+const error = options => {
   Notify({
     type: 'error',
-    message: message
+    message: options.message,
+    onClose: options.onClose
   });
 };
 
-const warning = message => {
+const warning = options => {
   Notify({
     type: 'warning',
-    message: message
+    message: options.message,
+    onClose: options.onClose
   });
 };
 
-const info = message => {
+const info = options => {
   Notify({
     type: 'info',
-    message: message
+    message: options.message,
+    onClose: options.onClose
   });
 };
 

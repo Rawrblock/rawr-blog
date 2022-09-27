@@ -1,9 +1,6 @@
 <template>
   <div class="blog">
-    <BlogHeader
-      :title="'Blog'"
-      coverUrl="http://rawrblock.oss-cn-hangzhou.aliyuncs.com/blog-header.jpg"
-    />
+    <BlogHeader :title="'Blog'" :coverUrl="$store.getters.blogCoverUri" />
     <div class="blog-card-warp">
       <div class="blog-edit-toggle">
         <span>Toggle Editing Post</span>
@@ -34,7 +31,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch('getBlogsList');
-  }
+  },
+  computed: {}
 };
 </script>
 

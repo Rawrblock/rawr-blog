@@ -3,10 +3,10 @@
     <div v-show="visible" :class="styleClass" :style="positionStyle">
       <!-- 图标区域 -->
       <div class="left">
-        <ion-icon v-if="type === 'error'" name="bug-sharp"></ion-icon>
-        <ion-icon v-else-if="type === 'info'" name="information-circle-sharp"></ion-icon>
-        <ion-icon v-else-if="type === 'warning'" name="warning-sharp"></ion-icon>
-        <ion-icon v-else name="checkmark-circle-sharp"></ion-icon>
+        <font-awesome-icon v-if="type === 'success'" icon="fa-solid fa-shield-heart" />
+        <font-awesome-icon v-else-if="type === 'warning'" icon="fa-solid fa-skull" />
+        <font-awesome-icon v-else-if="type === 'info'" icon="fa-solid fa-circle-exclamation" />
+        <font-awesome-icon v-else icon="fa-solid fa-bug" />
       </div>
       <!-- 消息区域 -->
       <div class="right">

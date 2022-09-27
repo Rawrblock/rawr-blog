@@ -3,18 +3,18 @@
     <!-- 编辑删除区域 -->
     <div class="icons" :class="isShow ? 'active' : ''">
       <div class="icon" @click="editBlog">
-        <ion-icon name="pencil-sharp"></ion-icon>
+        <font-awesome-icon icon="fa-solid fa-pencil" />
       </div>
       <div class="icon" @click="deleteBlog(blogItem.id)">
-        <ion-icon name="trash-sharp"></ion-icon>
+        <font-awesome-icon icon="fa-solid fa-trash-can" />
       </div>
     </div>
     <img :src="blogItem.cover.uri" alt="" />
     <div class="info">
       <h4>{{ blogItem.title }}</h4>
-      <h6>Posted on: {{ time }}</h6>
+      <h6>Posted on: {{ blogItem.createdTime }}</h6>
       <router-link class="link" :to="{ name: 'ViewBlog', params: { blogid: blogItem.id } }">
-        View The Post <ion-icon class="icon" name="arrow-forward-outline"></ion-icon>
+        View The Post <font-awesome-icon icon="fa-solid fa-arrow-right" />
       </router-link>
     </div>
   </div>
@@ -31,23 +31,6 @@ export default {
     async deleteBlog(id) {
       await this.$store.dispatch('deleteBlogs', id);
       await this.$store.dispatch('getBlogsList');
-    }
-  },
-  computed: {
-    time() {
-      return (
-        this.blogItem.createdTime.substring(0, 4) +
-        '-' +
-        this.blogItem.createdTime.substring(4, 6) +
-        '-' +
-        this.blogItem.createdTime.substring(6, 8) +
-        ' ' +
-        this.blogItem.createdTime.substring(8, 10) +
-        ':' +
-        this.blogItem.createdTime.substring(10, 12) +
-        ':' +
-        this.blogItem.createdTime.substring(12, 14)
-      );
     }
   }
 };

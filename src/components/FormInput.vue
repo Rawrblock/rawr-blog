@@ -1,49 +1,102 @@
 <template>
-  <div class="input">
-    <slot name="icon" class="icon">
-      <ion-icon name="mail-outline"></ion-icon>
-    </slot>
-    <input
-      type="text"
-      :placeholder="placeholderValue"
-      :value="value"
-      @input="$emit('updateValue', $event.target.value)"
-    />
-  </div>
+  <ValidationProvider
+    class="input"
+    tag="div"
+    :rules="rules"
+    :name="name"
+    :vid="vid"
+    v-slot="{ errors }"
+  >
+    <div class="content">
+      <slot name="icon" class="icon"></slot>
+      <input
+        :type="type"
+        :placeholder="placeholderValue"
+        v-model="inputValue"
+        @input="$emit('updateValue', $event.target.value)"
+      />
+    </div>
+    <span class="info">{{ errors[0] }}</span>
+  </ValidationProvider>
 </template>
 
 <script>
+import { ValidationProvider } from 'vee-validate';
 export default {
   name: 'FormInput',
-  props: ['placeholderValue', 'value'],
-  model: {
-    prop: 'value',
-    event: 'updateValue'
+  components: {
+    ValidationProvider
   },
   data() {
-    return {};
+    return {
+      inputValue: ''
+    };
+  },
+  props: {
+    value: {
+      type: String,
+      default: ''
+    },
+    // 文本框属性
+    type: {
+      type: String,
+      default: 'text'
+    },
+    placeholderValue: {
+      type: String,
+      default: ''
+    },
+    // 校验组件属性
+    rules: {
+      type: [String, Object],
+      default: ''
+    },
+    name: {
+      type: String,
+      default: ''
+    },
+    vid: {
+      type: String,
+      default: undefined
+    }
+  },
+  watch: {
+    inputValue(newVal) {
+      this.$emit('input', newVal);
+    }
   }
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .input {
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  .content {
+    position: relative;
+    display: flex;
+    align-items: center;
 
-  input {
-    width: 100%;
-    border: none;
-    background-color: #f2f7f6;
-    padding: 4px 4px 4px 30px;
-    height: 50px;
+    input {
+      width: 100%;
+      border: none;
+      background-color: #f2f7f6;
+      padding: 4px 4px 4px 30px;
+      height: 50px;
+    }
+    svg {
+      position: absolute;
+      left: 6px;
+      font-size: 14px;
+    }
   }
-  ion-icon {
+  .info {
+    font-size: 12px;
+    color: red;
     position: absolute;
-    left: 6px;
-    font-size: 14px;
+    transform: translateY(32px);
   }
 }
 </style>

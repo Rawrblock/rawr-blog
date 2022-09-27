@@ -11,33 +11,35 @@
         <ul class="menu-list">
           <li>
             <router-link :to="{ name: 'Home' }" class="menu-item">
-              <ion-icon class="icon" name="planet-sharp"></ion-icon>
+              <font-awesome-icon icon="fa-solid fa-house fa-lg" />
               <span>Home</span>
             </router-link>
           </li>
           <li>
             <router-link :to="{ name: 'Blog' }" class="menu-item">
-              <ion-icon class="icon" name="reader-sharp"></ion-icon>
+              <font-awesome-icon icon="fa-solid fa-book fa-lg" />
               <span>Blog</span>
             </router-link>
           </li>
           <li>
             <router-link :to="{ name: 'CreateBlog' }" class="menu-item">
-              <ion-icon name="file-tray-full-sharp"></ion-icon>
+              <font-awesome-icon icon="fa-solid fa-inbox fa-lg" />
               <span>CreateBlog</span>
             </router-link>
           </li>
-          <li>
+          <li v-if="!$store.state.user.currentUser.avatar">
             <router-link :to="{ name: 'Login' }" class="menu-item">
-              <ion-icon name="person-sharp"></ion-icon>
+              <font-awesome-icon icon="fa-solid fa-user fa-lg" />
               <span>Login</span>
             </router-link>
           </li>
         </ul>
       </div>
-      <div class="userInfo-container"></div>
+      <div v-if="$store.state.user.currentUser.avatar" class="userInfo-container">
+        <img :src="$store.state.user.currentUser.avatar.uri" alt="" />
+      </div>
       <!-- 菜单栏按钮 -->
-      <ion-icon class="menuIcon" name="menu-outline" @click="toggleNavMobile()"></ion-icon>
+      <font-awesome-icon icon="fa-solid fa-bars" class="menuIcon" @click="toggleNavMobile()" />
     </header>
     <!-- 移动端导航栏 -->
     <nav @click="toggleNavMobile()" class="nav-mobile">
@@ -60,7 +62,6 @@
 <script>
 export default {
   name: 'navigation',
-
   data() {
     return {
       navList: [
@@ -173,7 +174,7 @@ export default {
           position: relative;
           display: flex;
           align-items: center;
-          gap: 5px;
+          gap: 8px;
           &:hover {
             transition: 0.3s ease-in all;
             color: $navActive;
@@ -224,7 +225,7 @@ export default {
     height: 100%;
     position: fixed;
     left: 0;
-    z-index: 1;
+    z-index: 888;
     background: rgba(0, 0, 0, 0.8);
     display: none;
     animation: to_show 0.3s ease-in;
@@ -243,7 +244,7 @@ export default {
     height: 100%;
     padding: 50px 25px;
     background: #fff;
-    z-index: 1;
+    z-index: 999;
     transition: 0.3s all ease-in;
 
     &.show {
@@ -273,6 +274,17 @@ export default {
   height: 36px;
   background: white;
   border-radius: 50%;
-  margin: 0px 5px;
+  margin-right: 15px;
+  img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  @media (min-width: 800px) {
+    margin-right: 0;
+    margin-left: 15px;
+  }
 }
 </style>

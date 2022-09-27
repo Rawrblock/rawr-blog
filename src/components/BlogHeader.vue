@@ -3,7 +3,7 @@
     <img :src="coverUrl" alt="" />
     <div class="page-site-title">
       <h1>{{ title }}</h1>
-      <slot></slot>
+      <slot class="time"></slot>
     </div>
   </header>
 </template>
@@ -62,6 +62,12 @@ export default {
       letter-spacing: 2px;
       font-size: 45px;
       text-align: center;
+    }
+    .time {
+      color: #fff;
+      font-family: 'PingFang';
+      font-weight: 600;
+      letter-spacing: 1px;
     }
   }
 }

@@ -42,10 +42,14 @@ instance.interceptors.response.use(
 
 // 全局处理函数
 const handlerErrorResponse = response => {
-  console.log(response);
   // 当请求头过期时，就清除token与当前用户信息，退出登录操作
-  if (response.status === 500 || response.status === 403) {
+  if (response.data.code === 40001006) {
     store.dispatch('logout');
+    NotifyUtils.warning({
+      message: response.data.message
+    });
+    NProgress.done();
+    return;
   }
   // 当错误函数存在多个时
   if (response.data instanceof Array) {
@@ -53,7 +57,7 @@ const handlerErrorResponse = response => {
       NotifyUtils.error(item.message);
     });
   } else {
-    NotifyUtils.error(response.data.message);
+    NotifyUtils.error(response.data);
   }
   NProgress.done();
 };

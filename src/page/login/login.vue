@@ -9,10 +9,18 @@
       </p>
       <h2>Login to RawrBlogs</h2>
       <div class="inputs">
-        <FormInput :placeholderValue="'请输入邮箱'" v-model="email"></FormInput>
+        <FormInput
+          :placeholderValue="'请输入邮箱'"
+          v-model="email"
+          :rules="{ required: true, email: true }"
+        >
+          <template v-slot:icon>
+            <font-awesome-icon icon="fa-solid fa-envelope" />
+          </template>
+        </FormInput>
         <FormInput :placeholderValue="'请输入密码'" v-model="password">
           <template v-slot:icon>
-            <ion-icon name="lock-closed"></ion-icon>
+            <font-awesome-icon icon="fa-solid fa-lock" />
           </template>
         </FormInput>
       </div>
@@ -24,7 +32,10 @@
     </form>
 
     <!-- 右侧背景 -->
-    <div class="background"></div>
+    <div
+      class="background"
+      :style="{ backgroundImage: `url(${$store.getters.loginCoverUri})` }"
+    ></div>
   </div>
 </template>
 
@@ -50,6 +61,7 @@ export default {
         await this.$store.dispatch('getCurrentUser');
         this.$notify.success({
           message: '登录成功!',
+          duration: 1500,
           onClose: () => {
             this.$router.push({ name: 'Home' });
           }

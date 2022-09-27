@@ -35,6 +35,9 @@ export default {
         return;
       }
       this.navigation = false;
+    },
+    async getDefaultCover() {
+      await this.$store.dispatch('defaultCover');
     }
   },
   created() {
@@ -44,6 +47,9 @@ export default {
     $route() {
       this.checkRoute();
     }
+  },
+  mounted() {
+    this.getDefaultCover();
   }
 };
 </script>
@@ -119,11 +125,11 @@ export default {
     }
 
     .inputs {
-      width: 100%;
+      min-width: 350px;
       max-width: 350px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 20px;
     }
 
     .forgot-password {
@@ -140,15 +146,16 @@ export default {
     }
 
     .formBtn {
+      margin: 0 auto;
       cursor: pointer;
       padding: 12px 24px;
       color: #fff;
-      background-color: $footerblack;
+      background-color: #303030;
       border-radius: 20px;
       border: none;
       text-transform: uppercase;
       transition: 500ms ease all;
-      margin-top: 16px;
+      width: 35%;
       &:hover {
         transform: scale(1.1);
         background: rgba(48, 48, 48, 0.7);
@@ -169,7 +176,7 @@ export default {
   }
   .background {
     flex: 2;
-    background-image: url('./assets/images/background.png');
+    // background-image: url('./assets/images/background.png');
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
